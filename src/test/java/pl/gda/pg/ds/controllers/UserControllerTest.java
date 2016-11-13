@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import pl.gda.pg.ds.exceptions.UserAlreadyExistsException;
 import pl.gda.pg.ds.models.User;
 import pl.gda.pg.ds.services.UserService;
 
@@ -58,7 +59,7 @@ public class UserControllerTest {
         assertEquals("Returned users should come from the service", expectedUsers, returnedUsers);
     }
 
-    private User stubServiceToReturnStoredUser() {
+    private User stubServiceToReturnStoredUser() throws Exception {
         final User user = new User(USER_NAME);
         when(userService.save(any(User.class))).thenReturn(user);
         return user;

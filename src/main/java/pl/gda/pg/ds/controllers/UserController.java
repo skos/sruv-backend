@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import pl.gda.pg.ds.exceptions.UserAlreadyExistsException;
 import pl.gda.pg.ds.models.User;
 import pl.gda.pg.ds.services.UserService;
 
@@ -23,7 +24,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public User createUser(@RequestBody  final User user) {
+    public User createUser(@RequestBody  final User user) throws UserAlreadyExistsException {
         return service.save(user);
     }
 }
