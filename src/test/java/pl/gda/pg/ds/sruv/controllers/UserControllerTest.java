@@ -1,4 +1,4 @@
-package pl.gda.pg.ds.controllers;
+package pl.gda.pg.ds.sruv.controllers;
 
 import org.assertj.core.util.Lists;
 import org.junit.Before;
@@ -8,19 +8,15 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.gda.pg.ds.exceptions.UserAlreadyExistsException;
-import pl.gda.pg.ds.models.User;
-import pl.gda.pg.ds.services.UserService;
+import pl.gda.pg.ds.sruv.models.User;
+import pl.gda.pg.ds.sruv.services.UserService;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {

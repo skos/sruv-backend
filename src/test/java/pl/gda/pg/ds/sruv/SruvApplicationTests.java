@@ -1,4 +1,4 @@
-package pl.gda.pg.ds;
+package pl.gda.pg.ds.sruv;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

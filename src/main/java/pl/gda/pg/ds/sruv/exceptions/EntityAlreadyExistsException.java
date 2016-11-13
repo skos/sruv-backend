@@ -1,4 +1,4 @@
-package pl.gda.pg.ds.exceptions;
+package pl.gda.pg.ds.sruv.exceptions;
 
 public class EntityAlreadyExistsException extends Exception {
 }

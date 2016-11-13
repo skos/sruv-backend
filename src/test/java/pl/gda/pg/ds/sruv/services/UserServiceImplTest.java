@@ -1,4 +1,4 @@
-package pl.gda.pg.ds.services;
+package pl.gda.pg.ds.sruv.services;
 
 import org.assertj.core.util.Lists;
 import org.junit.Before;
@@ -10,15 +10,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.gda.pg.ds.exceptions.UserAlreadyExistsException;
-import pl.gda.pg.ds.models.User;
-import pl.gda.pg.ds.repositories.UserRepository;
+import pl.gda.pg.ds.sruv.exceptions.UserAlreadyExistsException;
+import pl.gda.pg.ds.sruv.models.User;
+import pl.gda.pg.ds.sruv.repositories.UserRepository;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 

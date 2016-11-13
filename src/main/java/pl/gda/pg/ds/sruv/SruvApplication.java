@@ -1,4 +1,4 @@
-package pl.gda.pg.ds;
+package pl.gda.pg.ds.sruv;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

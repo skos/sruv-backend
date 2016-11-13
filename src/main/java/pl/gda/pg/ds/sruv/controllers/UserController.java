@@ -1,13 +1,13 @@
-package pl.gda.pg.ds.controllers;
+package pl.gda.pg.ds.sruv.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import pl.gda.pg.ds.exceptions.UserAlreadyExistsException;
-import pl.gda.pg.ds.models.User;
-import pl.gda.pg.ds.services.UserService;
+import pl.gda.pg.ds.sruv.exceptions.UserAlreadyExistsException;
+import pl.gda.pg.ds.sruv.models.User;
+import pl.gda.pg.ds.sruv.services.UserService;
 
 import java.util.List;
 

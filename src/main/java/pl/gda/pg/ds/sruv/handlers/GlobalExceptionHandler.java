@@ -1,11 +1,11 @@
-package pl.gda.pg.ds.handlers;
+package pl.gda.pg.ds.sruv.handlers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import pl.gda.pg.ds.exceptions.EntityAlreadyExistsException;
+import pl.gda.pg.ds.sruv.exceptions.EntityAlreadyExistsException;
 
 @ControllerAdvice
 @RestController

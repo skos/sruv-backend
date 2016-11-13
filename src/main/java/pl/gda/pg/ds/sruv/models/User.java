@@ -1,4 +1,4 @@
-package pl.gda.pg.ds.models;
+package pl.gda.pg.ds.sruv.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

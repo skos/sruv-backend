@@ -1,7 +1,7 @@
-package pl.gda.pg.ds.services;
+package pl.gda.pg.ds.sruv.services;
 
-import pl.gda.pg.ds.exceptions.UserAlreadyExistsException;
-import pl.gda.pg.ds.models.User;
+import pl.gda.pg.ds.sruv.exceptions.UserAlreadyExistsException;
+import pl.gda.pg.ds.sruv.models.User;
 
 import java.util.List;
 
