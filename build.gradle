@@ -15,6 +15,10 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
+processResources {
+	expand(project.properties)
+}
+
 jar {
 	baseName = 'sruv'
 	version = '0.0.1-SNAPSHOT'
