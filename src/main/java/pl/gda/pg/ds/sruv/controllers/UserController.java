@@ -7,6 +7,7 @@ import pl.gda.pg.ds.sruv.exceptions.UserAlreadyExistsException;
 import pl.gda.pg.ds.sruv.models.User;
 import pl.gda.pg.ds.sruv.services.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody  final User user) throws UserAlreadyExistsException {
+    public User createUser(@RequestBody @Valid final User user) throws UserAlreadyExistsException {
         return service.save(user);
     }
 }
