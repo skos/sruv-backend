@@ -1,0 +1,46 @@
+stages:
+  - build
+  - test
+  - deploy
+  - cleanup
+
+before_script:
+  - printenv
+
+build_jar:
+  stage: build
+  script:
+    - START_BUILD_DATE=$(date +%Y%m%d%H%M%S)
+    - docker build -t builder-$CI_PROJECT_NAME .
+    - docker run --name deployment -d builder-$CI_PROJECT_NAME /bin/bash
+    - mkdir workspace
+    - docker export --output="workspace/deployment.tar" deployment
+    - tar -xf workspace/deployment.tar --wildcards -C workspace '*sruv-*.jar'
+    - find workspace -name 'sruv-*.jar' -exec mv {} $PWD/sruv-${CI_BUILD_REF:0:10}-$START_BUILD_DATE.jar \;
+    - docker rm deployment
+
+test_jar:
+  stage: test
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - \[ -s sruv*.jar \] || echo "The jar file does not exist or is empty"
+
+deploy_jar:
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - echo "Deploying jar..."
+    - "curl -X POST -F token=$TOKEN2TRIGGER_DOCKER_SRUV_CORE -F ref=$CI_BUILD_REF_NAME -F variables[UPSTREAM_CI_PROJECT_ID]=$CI_PROJECT_ID -F variables[UPSTREAM_CI_BUILD_ID]=$CI_BUILD_ID https://gitlab.com/api/v3/projects/$DOCKER_SRU_CORE_CI_PROJECT_ID/trigger/builds"
+  artifacts:
+    paths:
+    - sruv*.jar
+
+clean_environment:
+  stage: cleanup
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - echo "Cleaning the environment"
+    - rm -rf workspace sru*.jar
