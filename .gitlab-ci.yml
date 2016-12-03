@@ -4,9 +4,6 @@ stages:
   - deploy
   - cleanup
 
-before_script:
-  - printenv
-
 build_jar:
   stage: build
   script:
