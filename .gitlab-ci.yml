@@ -29,7 +29,7 @@ deploy_jar:
     GIT_STRATEGY: none
   script:
     - echo "Deploying jar..."
-    - "curl -X POST -F token=$TOKEN2TRIGGER_DOCKER_SRUV_CORE -F ref=$CI_BUILD_REF_NAME -F variables[UPSTREAM_CI_PROJECT_ID]=$CI_PROJECT_ID -F variables[UPSTREAM_CI_BUILD_ID]=$CI_BUILD_ID https://gitlab.ds.pg.gda.pl/api/v3/projects/$DOCKER_SRU_CORE_CI_PROJECT_ID/trigger/builds"
+    - "curl -X POST -F token=$TOKEN2TRIGGER_DOCKER_SRUV_CORE -F ref=master -F variables[UPSTREAM_CI_PROJECT_ID]=$CI_PROJECT_ID -F variables[UPSTREAM_CI_BUILD_ID]=$CI_BUILD_ID https://gitlab.ds.pg.gda.pl/api/v3/projects/$DOCKER_SRU_CORE_CI_PROJECT_ID/trigger/builds"
   artifacts:
     paths:
     - sruv*.jar
