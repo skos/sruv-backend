@@ -41,7 +41,7 @@ clean_environment:
   before_script:
     - echo "Trigger dockerizing the SRUV App..."
     - source variables.lst
-    - "curl -X POST -F token=$TOKEN2TRIGGER_DOCKER_SRUV_CORE -F ref=master -F variables[UPSTREAM_CI_PROJECT_ID]=$CI_PROJECT_ID -F variables[UPSTREAM_CI_BUILD_ID]=$CI_BUILD_ID https://gitlab.ds.pg.gda.pl/api/v3/projects/$DOCKER_SRU_CORE_CI_PROJECT_ID/trigger/builds"
+    - "curl -X POST -F token=$TOKEN2TRIGGER_DOCKER_SRUV_CORE -F ref=master -F variables[UPSTREAM_CI_PROJECT_ID]=$CI_PROJECT_ID -F variables[UPSTREAM_CI_BUILD_ID]=$UPSTREM_CI_BUILD_ID https://gitlab.ds.pg.gda.pl/api/v3/projects/$DOCKER_SRU_CORE_CI_PROJECT_ID/trigger/builds"
   script:
     - echo "Cleaning the environment"
     - rm -rf workspace sru*.jar *.lst
