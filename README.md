@@ -16,14 +16,15 @@ latest: Pulling from sruv/docker-sruv-core
 a59652fc2fa5: Pull complete 
 Digest: sha256:fbccf3dd9539e402c03637801de68f6cccbc22d4ab95ac33d758e5df6965b31b
 Status: Downloaded newer image for gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-core:latest 
-$ sudo docker pull registry.gitlab.com/podol/docker-sruv-postgres
+$ docker pull gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-postgres
 Using default tag: latest
-Trying to pull repository registry.gitlab.com/podol/docker-sruv-postgres ... 
-latest: Pulling from registry.gitlab.com/podol/docker-sruv-postgres
+Trying to pull repository gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-postgres ... 
+latest: Pulling from gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-postgres
 3690ec4760f9: Already exists 
-7d403be3833b: Pull complete 
-Digest: sha256:3ef3967398aa81e61ed995b4ab6f502eb455ef5d45624e1aa8e87e275bdd84d7
-Status: Downloaded newer image for registry.gitlab.com/podol/docker-sruv-postgres:latest
+a3ed95caeb02: Pull complete 
+d57e925e1ac0: Pull complete 
+Digest: sha256:8cb012e7cc78c7b9c44a3e274917d730ed204dcb40c51cef0e9a5f399376949f
+Status: Downloaded newer image for gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-postgres:latest
 
 $ mkdir -p /var/lib/postgresql/data
 $ chown -R 70:70 /var/lib/postgresql
