@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.gda.pg.ds.sruv.models.User;
+import pl.gda.pg.ds.sruv.dtos.SimpleUser;
 import pl.gda.pg.ds.sruv.services.UserService;
 
 import javax.annotation.Resource;
@@ -38,26 +38,18 @@ public class UserControllerTest {
 
     @Test
     public void testSave_shouldCreateUser() throws Exception {
-        final User savedUser = stubServiceToReturnStoredUser();
-        final User user = new User(USER_NAME);
-        User returnedUser = userController.createUser(user);
+        final SimpleUser user = new SimpleUser(USER_NAME);
+        userController.createUser(user);
 
         verify(userService, times(1)).save(user);
-        assertEquals("Returned user should come from the service", savedUser, returnedUser);
     }
 
     @Test
     public void testFindAll_shouldReturnEmptyList() throws Exception {
-        final List<User> expectedUsers = Lists.emptyList();
-        List<User> returnedUsers = userController.findAll();
+        final List<SimpleUser> expectedUsers = Lists.emptyList();
+        List<SimpleUser> returnedUsers = userController.findAll();
 
         verify(userService, times(1)).findAll();
         assertEquals("Returned users should come from the service", expectedUsers, returnedUsers);
-    }
-
-    private User stubServiceToReturnStoredUser() throws Exception {
-        final User user = new User(USER_NAME);
-        when(userService.save(any(User.class))).thenReturn(user);
-        return user;
     }
 }

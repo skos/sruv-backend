@@ -5,24 +5,25 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "login", nullable = false)
     @NotNull
     @Size(max = 128)
-    private String name;
+    private String login;
 
-    public User(String name) {
-        this.name = name;
+    public User(String login) {
+        this.login = login;
     }
 
     public User() {}
 
-    public String getName() {
-        return name;
+    public String getLogin() {
+        return login;
     }
 }

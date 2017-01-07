@@ -1,5 +1,4 @@
 .gradle
-/build/
 !gradle/wrapper/gradle-wrapper.jar
 /out/
 *.class
@@ -14,9 +13,11 @@
 
 ### IntelliJ IDEA ###
 .idea
+.ideaDataSources
 *.iws
 *.iml
 *.ipr
+dataSources
 
 ### NetBeans ###
 nbproject/private/

@@ -10,9 +10,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
+import pl.gda.pg.ds.sruv.dtos.SimpleUser;
 import pl.gda.pg.ds.sruv.exceptions.UserAlreadyExistsException;
 import pl.gda.pg.ds.sruv.models.User;
 import pl.gda.pg.ds.sruv.repositories.UserRepository;
+import pl.gda.pg.ds.sruv.services.impls.UserServiceImpl;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -34,7 +36,7 @@ public class UserServiceImplTest {
     private static final String USER_NAME = "testUser";
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -44,18 +46,16 @@ public class UserServiceImplTest {
 
     @Test
     public void testSave_shouldSaveNewUser() throws Exception {
-        final User savedUser = stubRepositoryToReturnUserOnSave();
-        final User user = new User(USER_NAME);
-        final User returnedUser = userService.save(user);
+        final SimpleUser user = new SimpleUser(USER_NAME);
+        userService.save(user);
 
-        verify(userRepository, times(1)).save(user);
-        assertEquals("Returned user should come from the repository", savedUser, returnedUser);
+        verify(userRepository, times(1)).save(any(User.class)); // TODO something better needed :)
     }
 
     @Test
     public void testFindAll_shouldReturnEmptyList() throws Exception {
-        final List<User> expectedUsers = Lists.emptyList();
-        List<User> returnedUsers = userService.findAll();
+        final List<SimpleUser> expectedUsers = Lists.emptyList();
+        List<SimpleUser> returnedUsers = userService.findAll();
 
         verify(userRepository, times(1)).findAll();
         assertEquals("Returned users should come from the repository", expectedUsers, returnedUsers);
@@ -67,13 +67,7 @@ public class UserServiceImplTest {
         final List<User> user = Lists.newArrayList(new User(USER_NAME));
         when(userRepository.findAll()).thenReturn(user);
 
-        userService.save(new User(USER_NAME));
+        userService.save(new SimpleUser(USER_NAME));
         verify(userRepository, never()).save(any(User.class));
-    }
-
-    private User stubRepositoryToReturnUserOnSave() {
-        User user = new User(USER_NAME);
-        when(userRepository.save(any(User.class))).thenReturn(user);
-        return user;
     }
 }
