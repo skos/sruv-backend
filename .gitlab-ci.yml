@@ -8,12 +8,17 @@ build_jar:
   stage: build
   script:
     - START_BUILD_DATE=$(date +%Y%m%d%H%M%S)
+    - "echo export SRUV_VERSION=${CI_BUILD_REF:0:10}-$START_BUILD_DATE >> env.lst"
+    - "echo export SRUV_DBSERVER=docker-sruv-postgres >> env.lst"
+    - "echo export SRUV_DBNAME=dbsruvbase >> env.lst"
+    - "echo export SRUV_DBUSER=dbsruvuser >> env.lst"
+    - "echo export SRUV_DBPASS=dbsruvpass >> env.lst"
     - docker build -t builder-$CI_PROJECT_NAME .
     - docker run --name deployment -d builder-$CI_PROJECT_NAME /bin/bash
     - mkdir workspace
     - docker export --output="workspace/deployment.tar" deployment
     - tar -xf workspace/deployment.tar --wildcards -C workspace '*sruv-*.jar'
-    - find workspace -name 'sruv-*.jar' -exec mv {} $PWD/sruv-${CI_BUILD_REF:0:10}-$START_BUILD_DATE.jar \;
+    - find workspace -name 'sruv-*.jar' -exec mv {} $PWD/ \;
     - docker rm deployment
 
 test_jar:
