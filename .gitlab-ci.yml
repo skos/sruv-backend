@@ -50,8 +50,6 @@ clean_environment:
 
 publish_master_on_github:
   stage: github_publish
-  variables:
-    GITHUB_REPO_URL: 'git@github.com:skos/sruv.git'
   script:
     - git checkout master
     - git pull origin master
@@ -60,5 +58,7 @@ publish_master_on_github:
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$GITHUB_SSH_KEY")
     - git push origin master
+  allow_failure: true
   only:
     - master
+    - SRUV-45
