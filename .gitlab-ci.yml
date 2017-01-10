@@ -57,8 +57,6 @@ publish_master_on_github:
     - if [ `grep -c github.com ~/.ssh/known_hosts` -eq 0 ]; then ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts; fi
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$GITHUB_SSH_KEY")
-    - pwd
-    - git remote -v
     - git push origin master
   allow_failure: true
   only:
