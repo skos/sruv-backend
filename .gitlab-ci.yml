@@ -61,4 +61,3 @@ publish_master_on_github:
   allow_failure: true
   only:
     - master
-    - SRUV-45
