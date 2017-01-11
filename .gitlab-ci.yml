@@ -3,6 +3,7 @@ stages:
   - test
   - deploy
   - cleanup
+  - github_publish
 
 build_jar:
   stage: build
@@ -51,3 +52,17 @@ clean_environment:
     - echo "Cleaning the environment"
     - rm -rf workspace sru*.jar *.lst
   dependencies: []
+
+publish_master_on_github:
+  stage: github_publish
+  script:
+    - git checkout master
+    - git pull origin master
+    - git remote set-url origin $GITHUB_REPO_URL
+    - if [ `grep -c github.com ~/.ssh/known_hosts` -eq 0 ]; then ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts; fi
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$GITHUB_SSH_KEY")
+    - git push origin master &&  ssh-agent -k || { ssh-agent -k ; exit 1; }
+  allow_failure: true
+  only:
+    - master
