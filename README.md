@@ -76,20 +76,43 @@ You can change this by editing pg_hba.conf or using the option -A, or
 
 Success.
 
-$ docker run -td -v /var/lib/postgresql/data:/var/lib/postgresql/data:Z -u postgres gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-postgres postgres
-11feed0e6efecc5ff21846cff6db5036376335097f23d91e63e465a86dd66416
+$ docker run -ti -v /var/lib/postgresql/data:/var/lib/postgresql/data:Z -u postgres gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-postgres /bin/sh
+/ $ postgres &
+/ $ LOG:  database system was shut down at 2017-02-06 22:00:37 UTC
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+/ $
+/ $
+/ $ psql
+psql (9.5.4)
+Type "help" for help.
 
-$ docker run -td -p 8080:8080 -u sruser gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-core /usr/bin/java -jar /var/lib/sruv/sruv.jar
-e6a753c2fa295c784136fb235020d20464dee75d6ce3d5630ffaf7b02fae0d45
+postgres=# CREATE USER dbsruvuser WITH PASSWORD 'dbsruvpass';
+CREATE ROLE
+postgres=# CREATE DATABASE dbsruvbase;
+CREATE DATABASE
+postgres=# GRANT ALL PRIVILEGES ON DATABASE dbsruvbase TO dbsruvuser;
+GRANT
+^D
+^D
+
+$ echo "listen_addresses = '172.17.0.2'" >> /var/lib/postgresql/data/postgresql.conf
+$ echo "host    all             all             172.17.0.3/32           trust" >> /var/lib/postgresql/data/pg_hba.conf
+
+$ docker run -td --name docker-sruv-postgres -v /var/lib/postgresql/data:/var/lib/postgresql/data:Z -u postgres gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-postgres postgres
+f59c41d511b6d8234ac4f0d6e8739d27f8d4e60a564cdf1b4c79cd5224f79944
+
+$ docker run -td --link docker-sruv-postgres -p 8080:8080 -u sruser gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-core /usr/bin/java -jar /var/lib/sruv/sruv.jar
+f1b653920286f922a11b88365b41c04d65c37f26395bbf2f364b10ab11332074
 ```
 
 ## Checking it
 ```console
 $ docker ps
 CONTAINER ID        IMAGE                                                COMMAND                  CREATED              STATUS              PORTS                    NAMES
-e6a753c2fa29        gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-core       "/usr/bin/java -jar /"   25 seconds ago       Up 23 seconds       0.0.0.0:8080->8080/tcp   reverent_wing
-11feed0e6efe        gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-postgres   "postgres"               About a minute ago   Up About a minute   5432/tcp                 jovial_knuth
-
+f1b653920286        gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-core       "/usr/bin/java -jar /"   4 seconds ago        Up 2 seconds        0.0.0.0:8080->8080/tcp   distracted_elion
+f59c41d511b6        gitlab.ds.pg.gda.pl:4567/sruv/docker-sruv-postgres   "postgres"               About a minute ago   Up About a minute   5432/tcp                 docker-sruv-postgres
 
 $ ls -lah /var/lib/postgresql/data
 razem 60K
@@ -122,10 +145,15 @@ drwx------.  3 70 70   58 12-14 23:52 pg_xlog
 
 $ curl -u admin 127.0.0.1:8080/health
 Enter host password for user 'admin':
-{"status":"UP","diskSpace":{"status":"UP","total":10725883904,"free":10510311424,"threshold":10485760},"db":{"status":"UP","database":"H2","hello":1}}
+{"status":"UP","diskSpace":{"status":"UP","total":10725883904,"free":10509852672,"threshold":10485760},"db":{"status":"UP","database":"PostgreSQL","hello":1}}
+$ curl -u admin 127.0.0.1:8080/info
+Enter host password for user 'admin':
+{"app":{"name":"SRU-V"},"build":{"version":"2333a2fb55-20170113141152"}}
+
 ```
 
 # Establishing environment with vagrant
+Section bellow is not up to date. There were some modifications about creating default database, user, password and "listen_addresses" in postgresql.conf and allowing a client in pg_hba.conf that are not described here yet. 
 Vagrant spins up the docker instances to bring up envrionment. There's no virtualization in between host and dockers (like vbox, kvm, etc.)
 ## Vagrantfile contnet
 ```console
